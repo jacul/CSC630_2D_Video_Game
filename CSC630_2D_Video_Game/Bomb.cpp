@@ -7,6 +7,7 @@
 //
 
 #include "Bomb.h"
+#include "Layer.h"
 #include <iostream>
 
 bool Bomb::isCollision(Thing *thing){
@@ -14,5 +15,10 @@ bool Bomb::isCollision(Thing *thing){
 }
 
 void Bomb::paint(){
-    
+    cout<<"Bomb at: "<<x<<" "<<y<<" "<<z<<endl;
+}
+
+bool Bomb::forwardToBottom(){
+    z++;
+    return z>=LAYERNUM;
 }

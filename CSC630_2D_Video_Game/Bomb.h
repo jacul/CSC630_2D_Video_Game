@@ -17,10 +17,11 @@ private:
     int x,y,z;
     
 public:
-    Bomb(int x,int y,int z){};
+    Bomb(int x,int y,int z){this->x=x;this->y=y;this->z=z;};
     ~Bomb(){};
     
     bool isCollision(Thing *thing);
+    bool forwardToBottom();
     void paint();
 };
 #endif

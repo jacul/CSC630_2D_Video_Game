@@ -10,6 +10,8 @@
 
 using namespace std;
 
+const int LAYERNUM = 5;
+
 class Layer{
     
 private:
@@ -19,7 +21,7 @@ public:
     Layer(){};
     ~Layer(){};
 
-    void generateThings();
+    void generateThings(int type);
     void thingsMovement();
     void drawThings();
     void putThing(Thing *thing);

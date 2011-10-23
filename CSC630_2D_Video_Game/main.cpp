@@ -34,13 +34,19 @@ int game_status=PAUSE;
 int width = 500;
 int height = 500;
 
-Layer layer[6];
+Layer layer[LAYERNUM];
+list<Bomb> bombs;
+
 int score;
+int counter;
+
+void thingSpawn();
+void thingsMove();
+void detectCollision();
 
 void initGameObject(){
-    layer[0] = Layer();
-    layer[0].generateThings();
-    
+//TODO: more initialize
+    thingSpawn();
 }
 
 void customInit(){
@@ -48,6 +54,8 @@ void customInit(){
     glShadeModel(GL_SMOOTH);
     
     game_status=RUN;
+    counter=0;
+    score=0;
     
     initGameObject();
 }
@@ -81,6 +89,24 @@ void display(){
     glutSwapBuffers();
 }
 
+void dropBomb(int x,int y){
+    Bomb b(x,y,0);
+    bombs.push_back(b);
+}
+
+void mouse(int button,int status,int x,int y){
+    if(status==GLUT_UP){
+        switch (button) {
+            case GLUT_LEFT_BUTTON:
+                dropBomb(x*500/width, y*500/width);
+                break;
+                
+            default:
+                break;
+        }
+    }
+}
+
 void keyboard(unsigned char c, int x, int y){
     switch (c) {
         case 'q':
@@ -95,40 +121,61 @@ void keyboard(unsigned char c, int x, int y){
 
 void timerfunc(int status){
     if(status == RUN){
-        
+        thingsMove();
+        detectCollision();
     }
-    
+    //for debug purpose
+    list<Bomb>::iterator it;
+    for(it=bombs.begin();it!=bombs.end();it++){
+        it->paint();
+    }
+    for (int i=0; i<LAYERNUM; i++) {
+        layer[i].drawThings();
+    }
+    cout<<"one loop========"<< counter++ <<endl;
     glutTimerFunc(1000, timerfunc, game_status);
 }
 
-void thingSpawn(){
-    
-}
-
 void thingsMove(){
-    for (int i=0; i<6; i++) {
+    for (int i=0; i<LAYERNUM; i++) {
         layer[i].thingsMovement();
     }
+    
+    list<Bomb>::iterator it;
+    for(it=bombs.begin(); it!=bombs.end(); it++){
+        if(it->forwardToBottom()){
+//TODO: any problems here?
+            cout<<"erase"<<endl;
+            bombs.erase(it);
+        }
+    }
+    
 }
 
 void detectCollision(){
     
 }
 
+void thingSpawn(){
+    layer[3].generateThings(BAD);
+    layer[4].generateThings(BAD);
+}
+
 int main (int argc, char * argv[])
 {
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 
     //*  Here to initial window
     glutInitWindowSize(width, height);
-    glutInitWindowPosition(400, 400);
+    glutInitWindowPosition(400, 200);
     glutCreateWindow("Bomb Game");
     
     //Set callbacks
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
     glutKeyboardFunc(keyboard);
+    glutMouseFunc(mouse);
     glutTimerFunc(1000, timerfunc, PAUSE);
     
     customInit();

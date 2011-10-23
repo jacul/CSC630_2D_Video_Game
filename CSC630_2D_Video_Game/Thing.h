@@ -13,34 +13,38 @@
 
 using namespace std;
 
+#define GOOD 0
+#define BAD 1
+
 class Thing{
     
 protected:
-    int _x, _y, _z;
-    
+    int _x, _y;
     
 public:
-    Thing(int x, int y, int z){_x=x;_y=y;_z=z;};
+    Thing(int x, int y){_x=x;_y=y;};
     ~Thing(){};
-    void print();
+
     void paint();
     void move();
+    virtual int getThingType(){return -1;};
     int getX(){return _x;};
     int getY(){return _y;};
-    int getZ(){return _z;};
 };
 
-class BadThing:public Thing{
+class BadThing:virtual public Thing{
     
 public:
-    BadThing(int x,int y, int z):Thing(x,y,z){};
+    BadThing(int x,int y):Thing(x,y){};
+    virtual int getThingType();
     
 };
 
 class GoodThing:public Thing{
     
 public:
-    GoodThing(int x,int y, int z):Thing(x,y,z){};
+    GoodThing(int x,int y):Thing(x,y){};
+    virtual int getThingType();
     
 };
 #endif

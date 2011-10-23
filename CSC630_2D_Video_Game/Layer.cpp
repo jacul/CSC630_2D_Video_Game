@@ -9,8 +9,14 @@
 #include <iostream>
 #include "Layer.h"
 
-void Layer::generateThings(){
-    
+void Layer::generateThings(int type){
+    if(type==GOOD){
+        GoodThing good(40,40);
+        putThing(&good);
+    }else if(type==BAD){
+        BadThing bad(10,10);
+        putThing(&bad);
+    }
 }
 
 void Layer::thingsMovement(){
@@ -21,7 +27,10 @@ void Layer::thingsMovement(){
 }
 
 void Layer::drawThings(){
-    
+    list<Thing>::iterator it;
+    for(it=thingsCollection.begin(); it!=thingsCollection.end(); it++){
+        it->paint();
+    }
 }
 
 void Layer::putThing(Thing *thing){

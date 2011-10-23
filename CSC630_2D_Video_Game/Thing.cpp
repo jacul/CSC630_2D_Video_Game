@@ -9,14 +9,18 @@
 #include <iostream>
 #include "Thing.h"
 
-void Thing::print(){
-
-}
-
 void Thing::paint(){
-    
+    cout<<"Thing at: "<<_x<<" "<<_y<<" type:"<<getThingType()<<endl;
 }
 
 void Thing::move(){
     
+}
+
+int GoodThing::getThingType(){
+    return GOOD;
+}
+
+int BadThing::getThingType(){
+    return BAD;
 }
