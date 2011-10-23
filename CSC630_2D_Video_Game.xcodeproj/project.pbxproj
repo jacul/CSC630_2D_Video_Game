@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F727DD8E1453C60B008C58F9 /* Bomb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F727DD8D1453C60B008C58F9 /* Bomb.cpp */; };
+		F789B50B1451F969007304BD /* Thing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F789B50A1451F969007304BD /* Thing.cpp */; };
+		F789B51114520E6E007304BD /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F789B51014520E6E007304BD /* GLUT.framework */; };
+		F789B51314520E74007304BD /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F789B51214520E74007304BD /* OpenGL.framework */; };
+		F789B51614521143007304BD /* Layer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F789B51514521143007304BD /* Layer.cpp */; };
 		F7E3D390144FD66300FE6AAB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7E3D38F144FD66300FE6AAB /* main.cpp */; };
 		F7E3D392144FD66300FE6AAB /* CSC630_2D_Video_Game.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = F7E3D391144FD66300FE6AAB /* CSC630_2D_Video_Game.1 */; };
+		F7E3D399144FD7C600FE6AAB /* Thing.h in Sources */ = {isa = PBXBuildFile; fileRef = F7E3D398144FD7C600FE6AAB /* Thing.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,9 +31,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F727DD8B1453C565008C58F9 /* Bomb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bomb.h; sourceTree = "<group>"; };
+		F727DD8D1453C60B008C58F9 /* Bomb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bomb.cpp; sourceTree = "<group>"; };
+		F789B50A1451F969007304BD /* Thing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Thing.cpp; sourceTree = "<group>"; };
+		F789B51014520E6E007304BD /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		F789B51214520E74007304BD /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		F789B51414521126007304BD /* Layer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layer.h; sourceTree = "<group>"; };
+		F789B51514521143007304BD /* Layer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Layer.cpp; sourceTree = "<group>"; };
 		F7E3D38B144FD66200FE6AAB /* CSC630_2D_Video_Game */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CSC630_2D_Video_Game; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7E3D38F144FD66300FE6AAB /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		F7E3D391144FD66300FE6AAB /* CSC630_2D_Video_Game.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = CSC630_2D_Video_Game.1; sourceTree = "<group>"; };
+		F7E3D398144FD7C600FE6AAB /* Thing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Thing.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,15 +49,40 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F789B51314520E74007304BD /* OpenGL.framework in Frameworks */,
+				F789B51114520E6E007304BD /* GLUT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F789B51714521185007304BD /* source */ = {
+			isa = PBXGroup;
+			children = (
+				F7E3D38F144FD66300FE6AAB /* main.cpp */,
+				F789B51514521143007304BD /* Layer.cpp */,
+				F789B50A1451F969007304BD /* Thing.cpp */,
+				F727DD8D1453C60B008C58F9 /* Bomb.cpp */,
+			);
+			name = source;
+			sourceTree = "<group>";
+		};
+		F789B5181452118B007304BD /* head */ = {
+			isa = PBXGroup;
+			children = (
+				F789B51414521126007304BD /* Layer.h */,
+				F7E3D398144FD7C600FE6AAB /* Thing.h */,
+				F727DD8B1453C565008C58F9 /* Bomb.h */,
+			);
+			name = head;
+			sourceTree = "<group>";
+		};
 		F7E3D380144FD66200FE6AAB = {
 			isa = PBXGroup;
 			children = (
+				F789B51214520E74007304BD /* OpenGL.framework */,
+				F789B51014520E6E007304BD /* GLUT.framework */,
 				F7E3D38E144FD66200FE6AAB /* CSC630_2D_Video_Game */,
 				F7E3D38C144FD66200FE6AAB /* Products */,
 			);
@@ -60,7 +99,8 @@
 		F7E3D38E144FD66200FE6AAB /* CSC630_2D_Video_Game */ = {
 			isa = PBXGroup;
 			children = (
-				F7E3D38F144FD66300FE6AAB /* main.cpp */,
+				F789B51714521185007304BD /* source */,
+				F789B5181452118B007304BD /* head */,
 				F7E3D391144FD66300FE6AAB /* CSC630_2D_Video_Game.1 */,
 			);
 			path = CSC630_2D_Video_Game;
@@ -91,6 +131,9 @@
 /* Begin PBXProject section */
 		F7E3D382144FD66200FE6AAB /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = F7E3D385144FD66200FE6AAB /* Build configuration list for PBXProject "CSC630_2D_Video_Game" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -114,6 +157,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F7E3D390144FD66300FE6AAB /* main.cpp in Sources */,
+				F7E3D399144FD7C600FE6AAB /* Thing.h in Sources */,
+				F789B50B1451F969007304BD /* Thing.cpp in Sources */,
+				F789B51614521143007304BD /* Layer.cpp in Sources */,
+				F727DD8E1453C60B008C58F9 /* Bomb.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,6 +245,7 @@
 				F7E3D397144FD66300FE6AAB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

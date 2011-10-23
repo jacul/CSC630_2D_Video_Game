@@ -9,6 +9,18 @@
 #ifndef CSC630_2D_Video_Game_Bomb_h
 #define CSC630_2D_Video_Game_Bomb_h
 
+#include "Thing.h"
 
+class Bomb{
 
+private:
+    int x,y,z;
+    
+public:
+    Bomb(int x,int y,int z){};
+    ~Bomb(){};
+    
+    bool isCollision(Thing *thing);
+    void paint();
+};
 #endif

@@ -7,3 +7,23 @@
 //
 
 #include <iostream>
+#include "Layer.h"
+
+void Layer::generateThings(){
+    
+}
+
+void Layer::thingsMovement(){
+    list<Thing>::iterator it;
+    for(it=thingsCollection.begin(); it!=thingsCollection.end(); it++){
+        it->move();
+    }
+}
+
+void Layer::drawThings(){
+    
+}
+
+void Layer::putThing(Thing *thing){
+    thingsCollection.push_back(*thing);
+}

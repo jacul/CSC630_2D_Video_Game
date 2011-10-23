@@ -7,3 +7,16 @@
 //
 
 #include <iostream>
+#include "Thing.h"
+
+void Thing::print(){
+
+}
+
+void Thing::paint(){
+    
+}
+
+void Thing::move(){
+    
+}

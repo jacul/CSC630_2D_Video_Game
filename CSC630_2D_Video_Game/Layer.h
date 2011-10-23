@@ -2,13 +2,26 @@
 //  Layer.h
 //  CSC630_2D_Video_Game
 //
-//  Created by zhu xiangdong on 11-10-21.
-//  Copyright 2011年 __MyCompanyName__. All rights reserved.
-//
+#ifndef LAYER_H
+#define LAYER_H
 
-#ifndef CSC630_2D_Video_Game_Layer_h
-#define CSC630_2D_Video_Game_Layer_h
+#include <list>
+#include "Thing.h"
 
+using namespace std;
 
+class Layer{
+    
+private:
+    list<Thing> thingsCollection;
+    
+public:
+    Layer(){};
+    ~Layer(){};
 
+    void generateThings();
+    void thingsMovement();
+    void drawThings();
+    void putThing(Thing *thing);
+};
 #endif
