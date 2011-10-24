@@ -30,12 +30,12 @@
 #define PAUSE 0
 #define RUN   1
 
-int game_status=PAUSE;
+int game_status;
 int width = 500;
 int height = 500;
 
 Layer layer[LAYERNUM];
-list<Bomb> bombs;
+list <Bomb*> bombs;
 
 int score;
 int counter;
@@ -43,9 +43,14 @@ int counter;
 void thingSpawn();
 void thingsMove();
 void detectCollision();
+void quit();
+void debugOutput();
 
 void initGameObject(){
-//TODO: more initialize
+    //every level we have four things.
+    thingSpawn();
+    thingSpawn();
+    thingSpawn();
     thingSpawn();
 }
 
@@ -67,22 +72,27 @@ void reshape(int newWidth, int newHeight){
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(0, 500, 500, 0);
+    gluOrtho2D(0, 400, 400, 0);
     glMatrixMode(GL_MODELVIEW);
     
     glutPostRedisplay();
 }
 
+void drawBombs(){
+    
+}
+
 void display(){
     glClear(GL_COLOR_BUFFER_BIT);
+    glLoadIdentity();
     
-    glColor3f(1, 0, 0);
-    glBegin(GL_POLYGON);
-    glVertex2f(1, 1);
-    glVertex2f(15, 1);
-    glVertex2f(15, 15);
-    glVertex2f(1, 15);
-    glEnd();
+    drawBombs();
+    
+    layer[0].drawThings();
+    layer[1].drawThings();
+    layer[2].drawThings();
+    layer[3].drawThings();
+    layer[4].drawThings();
     
     glFlush();
     
@@ -90,7 +100,7 @@ void display(){
 }
 
 void dropBomb(int x,int y){
-    Bomb b(x,y,0);
+    Bomb *b = new Bomb(x,y,0);
     bombs.push_back(b);
 }
 
@@ -98,12 +108,18 @@ void mouse(int button,int status,int x,int y){
     if(status==GLUT_UP){
         switch (button) {
             case GLUT_LEFT_BUTTON:
-                dropBomb(x*500/width, y*500/width);
+                dropBomb(x*400/width, y*400/width);
                 break;
-                
+            case GLUT_MIDDLE_BUTTON:
+                game_status= game_status==RUN ? PAUSE : RUN;
+                break;
+            case GLUT_RIGHT_BUTTON:
+                debugOutput();
+                break;
             default:
                 break;
         }
+        glutPostRedisplay();
     }
 }
 
@@ -111,7 +127,7 @@ void keyboard(unsigned char c, int x, int y){
     switch (c) {
         case 'q':
         case 'Q':
-            exit(0);
+            quit();
             break;
             
         default:
@@ -124,17 +140,15 @@ void timerfunc(int status){
     if(status == RUN){
         thingsMove();
         detectCollision();
+        if(counter==20){//every 20 seconds, we have more new friends
+            counter=0;
+            thingSpawn();
+        }
+        counter++;
     }
-    //for debug purpose
-    list<Bomb>::iterator it;
-    for(it=bombs.begin();it!=bombs.end();it++){
-        it->paint();
-    }
-    for (int i=0; i<LAYERNUM; i++) {
-        layer[i].drawThings();
-    }
-    cout<<"one loop========"<< counter++ <<endl;
+    //debugOutput();
     glutTimerFunc(1000, timerfunc, game_status);
+    glutPostRedisplay();
 }
 
 void thingsMove(){
@@ -142,11 +156,10 @@ void thingsMove(){
         layer[i].thingsMovement();
     }
 
-    list<Bomb>::iterator it;
+    list<Bomb*>::iterator it;
     for(it=bombs.begin(); it!=bombs.end(); it++){
-        if(it->forwardToBottom()){
-//TODO: any problems here?
-            cout<<"erase"<<endl;
+        if((*it)->forwardToBottom()){
+            //bomb reaches the bottom, eliminated
             bombs.erase(it);
         }
     }
@@ -154,13 +167,38 @@ void thingsMove(){
 }
 
 void detectCollision(){
-    
+    list<Bomb*>::iterator it;
+    for(it=bombs.begin(); it!=bombs.end(); it++){
+        int kills = (*it)->hitLevel(&layer[(*it)->getLevel()]);
+        if(kills > 0){
+            //bomb contacts with a thing, bomb's destroyed
+            bombs.erase(it);
+        }
+    }
 }
 
 void thingSpawn(){
+    //Engaging more bad things. Try to eliminate them all!
     layer[3].generateThings(BAD);
     layer[4].generateThings(BAD);
+    
+    //we have more good things. Thus making the game harder.
     layer[0].generateThings(GOOD);
+    layer[1].generateThings(GOOD);
+    layer[2].generateThings(GOOD);
+}
+
+void debugOutput(){
+    //for debug purpose
+    list<Bomb*>::iterator it;
+    for(it=bombs.begin();it!=bombs.end();it++){
+        (*it)->printInfo();
+    }
+    for (int i=0; i<LAYERNUM; i++) {
+        layer[i].printInfo();
+    }
+    cout<<"one loop========"<< counter <<endl;
+
 }
 
 int main (int argc, char * argv[])
@@ -185,4 +223,9 @@ int main (int argc, char * argv[])
     glutMainLoop();
     
     return 0;
+}
+
+void quit(){
+    bombs.clear();
+    exit(0);
 }

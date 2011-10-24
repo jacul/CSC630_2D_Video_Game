@@ -10,6 +10,7 @@
 #define CSC630_2D_Video_Game_Bomb_h
 
 #include "Thing.h"
+#include "Layer.h"
 
 class Bomb{
 
@@ -23,5 +24,9 @@ public:
     bool isCollision(Thing *thing);
     bool forwardToBottom();
     void paint();
+    int getLevel();
+    int hitLevel(Layer *layer);
+    
+    void printInfo();
 };
 #endif

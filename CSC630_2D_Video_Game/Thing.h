@@ -19,31 +19,31 @@ using namespace std;
 class Thing{
     
 protected:
-    int _x, _y;
-    int type;
+    int x, y;
     
 public:
-    Thing(int x, int y){_x=x;_y=y;type=-1;};
+    Thing(int x, int y){this->x=x;this->y=y;};
     ~Thing(){};
 
     void paint();
     void move();
-    int getThingType(){return type;};
-    int getX(){return _x;};
-    int getY(){return _y;};
+    virtual int getThingType()=0;
+    int getX(){return x;};
+    int getY(){return y;};
+    void printInfo();
 };
 
 class BadThing:virtual public Thing{
     
 public:
-    BadThing(int x,int y):Thing(x,y){type=BAD;};
-    
+    BadThing(int x,int y):Thing(x,y){};
+    int getThingType();
 };
 
 class GoodThing:public Thing{
     
 public:
-    GoodThing(int x,int y):Thing(x,y){type=GOOD;};
-    
+    GoodThing(int x,int y):Thing(x,y){};
+    int getThingType();
 };
 #endif

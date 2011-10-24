@@ -7,18 +7,40 @@
 //
 
 #include "Bomb.h"
-#include "Layer.h"
 #include <iostream>
 
 bool Bomb::isCollision(Thing *thing){
-    return (thing->getX()==x) && (thing->getY()==y);
+    int tx=thing->getX();
+    int ty=thing->getY();
+    return tx>=x-3 && tx<=x+3 && ty>=y-3 && ty<=y+3;
 }
 
 void Bomb::paint(){
+    
+}
+
+void Bomb::printInfo(){
     cout<<"Bomb at: "<<x<<" "<<y<<" "<<z<<endl;
 }
 
 bool Bomb::forwardToBottom(){
     z++;
     return z>=LAYERNUM;
+}
+
+int Bomb::getLevel(){
+    return z;
+}
+
+int Bomb::hitLevel(Layer *layer){
+    int kills = 0;
+    list<Thing*> *things = layer->getAllThings();
+    list<Thing*>::iterator it;
+    for(it=things->begin(); it!=things->end(); it++){
+        if (isCollision(*it)) {
+            things->erase(it);
+            kills++;
+        }
+    }
+    return kills;
 }

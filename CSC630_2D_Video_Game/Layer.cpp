@@ -7,14 +7,23 @@
 //
 
 #include <iostream>
+#include <stdlib.h>
 #include "Layer.h"
 
 void Layer::generateThings(int type){
+    generateThings(type, 1);
+}
+
+void Layer::generateThings(int type, int num){
     if(type==GOOD){
-        GoodThing *good = new GoodThing(40,40);
+        int x= rand()%398 +1;
+        int y= rand()%398 +1;
+        GoodThing *good = new GoodThing(x,y);
         putThing(good);
     }else if(type==BAD){
-        BadThing *bad = new BadThing(10,10);
+        int x= rand()%398 +1;
+        int y= rand()%398 +1;
+        BadThing *bad = new BadThing(x,y);
         putThing(bad);
     }
 }
@@ -22,7 +31,7 @@ void Layer::generateThings(int type){
 void Layer::thingsMovement(){
     list<Thing*>::iterator it;
     for(it=thingsCollection.begin(); it!=thingsCollection.end(); it++){
-        (*it)->paint();
+        (*it)->move();
     }
 }
 
@@ -35,4 +44,15 @@ void Layer::drawThings(){
 
 void Layer::putThing(Thing *thing){
     thingsCollection.push_back(thing);
+}
+
+list<Thing *>* Layer::getAllThings(){
+    return &thingsCollection;
+}
+
+void Layer::printInfo(){
+    list<Thing*>::iterator it;
+    for(it=thingsCollection.begin(); it!=thingsCollection.end(); it++){
+        (*it)->printInfo();
+    }
 }

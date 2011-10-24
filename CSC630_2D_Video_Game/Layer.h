@@ -5,8 +5,8 @@
 #ifndef LAYER_H
 #define LAYER_H
 
-#include <list>
 #include "Thing.h"
+#include <list>
 
 using namespace std;
 
@@ -19,11 +19,15 @@ private:
     
 public:
     Layer(){};
-    ~Layer(){};
+    ~Layer(){thingsCollection.clear();};
 
     void generateThings(int type);
+    void generateThings(int type, int num);
     void thingsMovement();
     void drawThings();
     void putThing(Thing *thing);
+    list<Thing*>* getAllThings();
+    
+    void printInfo();
 };
 #endif
