@@ -16,9 +16,9 @@ class Layer{
     
 private:
     list<Thing*> thingsCollection;
-    
+    int z;
 public:
-    Layer(){};
+    Layer(int z){this->z=z;};
     ~Layer(){thingsCollection.clear();};
 
     void generateThings(int type);

@@ -12,7 +12,7 @@
 bool Bomb::isCollision(Thing *thing){
     int tx=thing->getX();
     int ty=thing->getY();
-    return tx>=x-3 && tx<=x+3 && ty>=y-3 && ty<=y+3;
+    return tx>=x-HALFSIZE && tx<=x+HALFSIZE && ty>=y-HALFSIZE && ty<=y+HALFSIZE;
 }
 
 void Bomb::paint(){

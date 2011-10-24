@@ -16,13 +16,20 @@ using namespace std;
 #define GOOD 0
 #define BAD 1
 
+const float COLORS[5][3] = {{1,1,0},//yellow
+    {1,0.8431,0},//gold
+    {1,0.27,0},//orange red
+    {0.54,0.1686,0.886},//blue violet
+    {0.5647,0,0.82745}};//dark violet
+const int HALFSIZE = 5;
+
 class Thing{
     
 protected:
-    int x, y;
+    int x, y, z;
     
 public:
-    Thing(int x, int y){this->x=x;this->y=y;};
+    Thing(int x, int y, int z){this->x=x;this->y=y;this->z=z;};
     ~Thing(){};
 
     void paint();
@@ -36,14 +43,14 @@ public:
 class BadThing:virtual public Thing{
     
 public:
-    BadThing(int x,int y):Thing(x,y){};
+    BadThing(int x,int y,int z):Thing(x,y,z){};
     int getThingType();
 };
 
 class GoodThing:public Thing{
     
 public:
-    GoodThing(int x,int y):Thing(x,y){};
+    GoodThing(int x,int y,int z):Thing(x,y,z){};
     int getThingType();
 };
 #endif

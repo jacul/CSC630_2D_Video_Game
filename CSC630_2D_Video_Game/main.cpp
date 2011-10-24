@@ -34,11 +34,13 @@ int game_status;
 int width = 500;
 int height = 500;
 
-Layer layer[LAYERNUM];
+Layer layer[LAYERNUM]={Layer(0),Layer(1),Layer(2),Layer(3),Layer(4)};
 list <Bomb*> bombs;
 
 int score;
 int counter;
+
+bool FULLSCREEN=false;
 
 void thingSpawn();
 void thingsMove();
@@ -55,7 +57,7 @@ void initGameObject(){
 }
 
 void customInit(){
-    glClearColor(0, 0, 0, 1);
+    glClearColor(1, 1, 1, 1);
     glShadeModel(GL_SMOOTH);
     
     game_status=RUN;
@@ -79,7 +81,10 @@ void reshape(int newWidth, int newHeight){
 }
 
 void drawBombs(){
-    
+    list<Bomb*>::iterator bombit;
+    for(bombit=bombs.begin();bombit!=bombs.end();bombit++){
+        (*bombit)->paint();
+    }
 }
 
 void display(){
@@ -129,7 +134,16 @@ void keyboard(unsigned char c, int x, int y){
         case 'Q':
             quit();
             break;
-            
+        case 13:
+			if (FULLSCREEN) {
+				glutReshapeWindow(400, 400);
+				glutPositionWindow(400, 200);
+				FULLSCREEN=false;
+			}else {
+				glutFullScreen();
+				FULLSCREEN=true;
+			}
+			break;
         default:
             break;
     }
@@ -138,8 +152,8 @@ void keyboard(unsigned char c, int x, int y){
 
 void timerfunc(int status){
     if(status == RUN){
-        thingsMove();
         detectCollision();
+        thingsMove();
         if(counter==20){//every 20 seconds, we have more new friends
             counter=0;
             thingSpawn();

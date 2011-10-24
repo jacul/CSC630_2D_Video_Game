@@ -19,12 +19,12 @@
 #endif
 
 void Thing::paint(){
-    glPointSize(20.0f);  
-    glBegin(GL_POINTS); // Start drawing a point primitive  
-    glVertex2i(x, y); // The bottom left corner  
-    //glVertex2i(x-1, y+1); // The top left corner  
-    //glVertex2i(x+1, y+1); // The top right corner  
-    //glVertex2i(x+1, y-1); // The bottom right corner  
+    glColor3fv(COLORS[z]);
+    glBegin(GL_POLYGON); // Start drawing a point primitive  
+    glVertex2i(x-HALFSIZE, y-HALFSIZE); // The bottom left corner  
+    glVertex2i(x-HALFSIZE, y+HALFSIZE); // The top left corner  
+    glVertex2i(x+HALFSIZE, y+HALFSIZE); // The top right corner  
+    glVertex2i(x+HALFSIZE, y-HALFSIZE); // The bottom right corner  
     glEnd();
 }
 
@@ -33,7 +33,7 @@ void Thing::move(){
 }
 
 void Thing::printInfo(){
-    cout<<"Thing at: x:"<<x<<" y:"<<y<<" type:"<<(getThingType()==GOOD?"Good":"Bad")<<endl;
+    cout<<"Thing at: x:"<<x<<" y:"<<y<<" z:"<<z<<" type:"<<(getThingType()==GOOD?"Good":"Bad")<<endl;
 }
 
 int BadThing::getThingType(){
