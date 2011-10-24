@@ -91,13 +91,13 @@ void display(){
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
     
-    drawBombs();
-    
     layer[0].drawThings();
     layer[1].drawThings();
     layer[2].drawThings();
     layer[3].drawThings();
     layer[4].drawThings();
+    
+    drawBombs();
     
     glFlush();
     
@@ -185,8 +185,7 @@ void detectCollision(){
     for(it=bombs.begin(); it!=bombs.end(); it++){
         int kills = (*it)->hitLevel(&layer[(*it)->getLevel()]);
         if(kills > 0){
-            //bomb contacts with a thing, bomb's destroyed
-            bombs.erase(it);
+            
         }
     }
 }

@@ -9,6 +9,16 @@
 #include "Bomb.h"
 #include <iostream>
 
+#ifdef _WIN32
+#include <GL/glut.h>
+#include <GL/GLU.h>
+#include <GL/GL.h>
+#else
+#include <GLUT/glut.h>			// GLUT
+#include <OpenGL/glu.h>			// GLU
+#include <OpenGL/gl.h>			// OpenGL
+#endif
+
 bool Bomb::isCollision(Thing *thing){
     int tx=thing->getX();
     int ty=thing->getY();
@@ -16,7 +26,12 @@ bool Bomb::isCollision(Thing *thing){
 }
 
 void Bomb::paint(){
-    
+    glColor3f(0, 1, 0);
+    glBegin(GL_POLYGON);
+    glVertex2d(x, y-4);
+    glVertex2d(x+4, y+4);
+    glVertex2d(x-4, y+4);
+    glEnd();
 }
 
 void Bomb::printInfo(){

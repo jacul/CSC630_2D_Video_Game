@@ -20,7 +20,7 @@
 
 void Thing::paint(){
     glColor3fv(COLORS[z]);
-    glBegin(GL_POLYGON); // Start drawing a point primitive  
+    glBegin(GL_POLYGON);
     glVertex2i(x-HALFSIZE, y-HALFSIZE); // The bottom left corner  
     glVertex2i(x-HALFSIZE, y+HALFSIZE); // The top left corner  
     glVertex2i(x+HALFSIZE, y+HALFSIZE); // The top right corner  
