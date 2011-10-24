@@ -11,28 +11,28 @@
 
 void Layer::generateThings(int type){
     if(type==GOOD){
-        GoodThing good(40,40);
-        putThing(&good);
+        GoodThing *good = new GoodThing(40,40);
+        putThing(good);
     }else if(type==BAD){
-        BadThing bad(10,10);
-        putThing(&bad);
+        BadThing *bad = new BadThing(10,10);
+        putThing(bad);
     }
 }
 
 void Layer::thingsMovement(){
-    list<Thing>::iterator it;
+    list<Thing*>::iterator it;
     for(it=thingsCollection.begin(); it!=thingsCollection.end(); it++){
-        it->move();
+        (*it)->paint();
     }
 }
 
 void Layer::drawThings(){
-    list<Thing>::iterator it;
+    list<Thing*>::iterator it;
     for(it=thingsCollection.begin(); it!=thingsCollection.end(); it++){
-        it->paint();
+        (*it)->paint();
     }
 }
 
 void Layer::putThing(Thing *thing){
-    thingsCollection.push_back(*thing);
+    thingsCollection.push_back(thing);
 }

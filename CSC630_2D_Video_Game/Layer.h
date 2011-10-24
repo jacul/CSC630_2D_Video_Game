@@ -15,7 +15,7 @@ const int LAYERNUM = 5;
 class Layer{
     
 private:
-    list<Thing> thingsCollection;
+    list<Thing*> thingsCollection;
     
 public:
     Layer(){};

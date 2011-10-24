@@ -110,6 +110,7 @@ void mouse(int button,int status,int x,int y){
 void keyboard(unsigned char c, int x, int y){
     switch (c) {
         case 'q':
+        case 'Q':
             exit(0);
             break;
             
@@ -140,7 +141,7 @@ void thingsMove(){
     for (int i=0; i<LAYERNUM; i++) {
         layer[i].thingsMovement();
     }
-    
+
     list<Bomb>::iterator it;
     for(it=bombs.begin(); it!=bombs.end(); it++){
         if(it->forwardToBottom()){
@@ -159,6 +160,7 @@ void detectCollision(){
 void thingSpawn(){
     layer[3].generateThings(BAD);
     layer[4].generateThings(BAD);
+    layer[0].generateThings(GOOD);
 }
 
 int main (int argc, char * argv[])

@@ -20,14 +20,15 @@ class Thing{
     
 protected:
     int _x, _y;
+    int type;
     
 public:
-    Thing(int x, int y){_x=x;_y=y;};
+    Thing(int x, int y){_x=x;_y=y;type=-1;};
     ~Thing(){};
 
     void paint();
     void move();
-    virtual int getThingType(){return -1;};
+    int getThingType(){return type;};
     int getX(){return _x;};
     int getY(){return _y;};
 };
@@ -35,16 +36,14 @@ public:
 class BadThing:virtual public Thing{
     
 public:
-    BadThing(int x,int y):Thing(x,y){};
-    virtual int getThingType();
+    BadThing(int x,int y):Thing(x,y){type=BAD;};
     
 };
 
 class GoodThing:public Thing{
     
 public:
-    GoodThing(int x,int y):Thing(x,y){};
-    virtual int getThingType();
+    GoodThing(int x,int y):Thing(x,y){type=GOOD;};
     
 };
 #endif

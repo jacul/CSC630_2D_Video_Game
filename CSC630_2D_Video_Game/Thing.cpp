@@ -6,7 +6,6 @@
 //  Copyright 2011年 __MyCompanyName__. All rights reserved.
 //
 
-#include <iostream>
 #include "Thing.h"
 
 void Thing::paint(){
@@ -15,12 +14,4 @@ void Thing::paint(){
 
 void Thing::move(){
     
-}
-
-int GoodThing::getThingType(){
-    return GOOD;
-}
-
-int BadThing::getThingType(){
-    return BAD;
 }
