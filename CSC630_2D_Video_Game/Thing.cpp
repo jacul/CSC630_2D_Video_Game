@@ -7,7 +7,7 @@
 //
 
 #include "Thing.h"
-
+#include <math.h>
 #ifdef _WIN32
 #include <GL/glut.h>
 #include <GL/GLU.h>
@@ -17,6 +17,12 @@
 #include <OpenGL/glu.h>			// GLU
 #include <OpenGL/gl.h>			// OpenGL
 #endif
+
+Thing::Thing(int x, int y, int z){
+    this->x=x;this->y=y;this->z=z;
+    r = rand()%361;//0~360
+    spd=4;
+}
 
 void Thing::paint(){
     glColor3fv(COLORS[z]);
@@ -29,6 +35,15 @@ void Thing::paint(){
 }
 
 void Thing::move(){
+    float dg=r*DR;
+    x+= cos(dg)*spd;
+    y-= sin(dg)*spd;
+    if(x<0||x>399){
+        r=180-r;
+    }
+    if(y<0||y>399){
+        r=360-r;
+    }
     
 }
 

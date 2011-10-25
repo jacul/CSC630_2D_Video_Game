@@ -29,6 +29,7 @@
 
 #define PAUSE 0
 #define RUN   1
+#define INTERVAL 1000
 
 int game_status;
 int width = 500;
@@ -161,7 +162,7 @@ void timerfunc(int status){
         counter++;
     }
     //debugOutput();
-    glutTimerFunc(1000, timerfunc, game_status);
+    glutTimerFunc(INTERVAL, timerfunc, game_status);
     glutPostRedisplay();
 }
 
@@ -229,7 +230,7 @@ int main (int argc, char * argv[])
     glutReshapeFunc(reshape);
     glutKeyboardFunc(keyboard);
     glutMouseFunc(mouse);
-    glutTimerFunc(1000, timerfunc, PAUSE);
+    glutTimerFunc(INTERVAL, timerfunc, PAUSE);
     
     customInit();
     

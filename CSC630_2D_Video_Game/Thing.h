@@ -22,14 +22,16 @@ const float COLORS[5][3] = {{1,1,0},//yellow
     {0.54,0.1686,0.886},//blue violet
     {0.5647,0,0.82745}};//dark violet
 const int HALFSIZE = 5;
+const float DR = 3.14159/180;
 
 class Thing{
     
 protected:
     int x, y, z;
+    int r,spd;
     
 public:
-    Thing(int x, int y, int z){this->x=x;this->y=y;this->z=z;};
+    Thing(int x, int y, int z);
     ~Thing(){};
 
     void paint();
