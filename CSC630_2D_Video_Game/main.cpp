@@ -58,7 +58,7 @@ void initGameObject(){
 }
 
 void customInit(){
-    glClearColor(1, 1, 1, 1);
+    glClearColor(0, 0, 0, 1);
     glShadeModel(GL_SMOOTH);
     
     game_status=RUN;
@@ -92,11 +92,11 @@ void display(){
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
     
-    layer[0].drawThings();
-    layer[1].drawThings();
-    layer[2].drawThings();
-    layer[3].drawThings();
     layer[4].drawThings();
+    layer[3].drawThings();
+    layer[2].drawThings();
+    layer[1].drawThings();
+    layer[0].drawThings();
     
     drawBombs();
     
@@ -110,14 +110,18 @@ void dropBomb(int x,int y){
     bombs.push_back(b);
 }
 
+void pauseGame(){
+    game_status= game_status==RUN ? PAUSE : RUN;
+}
+
 void mouse(int button,int status,int x,int y){
     if(status==GLUT_UP){
         switch (button) {
             case GLUT_LEFT_BUTTON:
-                dropBomb(x*400/width, y*400/width);
+                dropBomb(x*400/width, y*400/height);
                 break;
             case GLUT_MIDDLE_BUTTON:
-                game_status= game_status==RUN ? PAUSE : RUN;
+                pauseGame();
                 break;
             case GLUT_RIGHT_BUTTON:
                 debugOutput();
@@ -134,6 +138,10 @@ void keyboard(unsigned char c, int x, int y){
         case 'q':
         case 'Q':
             quit();
+            break;
+        case 'p':
+        case 'P':
+            pauseGame();
             break;
         case 13:
 			if (FULLSCREEN) {

@@ -44,7 +44,7 @@ void Thing::move(){
     if(y<0||y>399){
         r=360-r;
     }
-    
+    r%=361;
 }
 
 void Thing::printInfo(){
