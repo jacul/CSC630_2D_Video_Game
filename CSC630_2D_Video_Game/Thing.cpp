@@ -2,8 +2,9 @@
 //  Thing.cpp
 //  CSC630_2D_Video_Game
 //
-//  Created by zhu xiangdong on 11-10-21.
-//  Copyright 2011年 __MyCompanyName__. All rights reserved.
+// This is the thing class, it is abstract. It has two subclass,  GoodThing and BadThing.
+// Thing looks like a square, and its color depends on it's type and level.
+// It can be destroyed by a bomb.
 //
 
 #include "Thing.h"

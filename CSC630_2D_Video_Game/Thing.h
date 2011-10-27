@@ -2,8 +2,6 @@
 //  Thing.cpp
 //  CSC630_2D_Video_Game
 //
-//  Created by zhu xiangdong on 11-10-20.
-//  Copyright 2011年 __MyCompanyName__. All rights reserved.
 //
 
 #ifndef THING_H
@@ -44,7 +42,7 @@ public:
     int getY(){return y;};
     void printInfo();
     void kill(){dead=true;};
-    bool isDead(){if(dead)deadcounter++;return dead &&deadcounter>=2;};
+    bool canRemove(){if(dead)deadcounter++;return dead &&deadcounter>=2;};
 };
 
 class BadThing:virtual public Thing{

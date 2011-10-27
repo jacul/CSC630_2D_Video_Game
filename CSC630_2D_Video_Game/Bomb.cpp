@@ -1,9 +1,9 @@
 //
 //  Bomb.cpp
 //  CSC630_2D_Video_Game
-//
-//  Created by zhu xiangdong on 11-10-22.
-//  Copyright (c) 2011年 __MyCompanyName__. All rights reserved.
+//  Represents a bomb. It has color and shape. Becomes more and more invisible while going deeper.
+//  After going to level 5, it's destroyed.
+//  
 //
 
 #include "Bomb.h"
@@ -55,10 +55,6 @@ int Bomb::hitLevel(Layer *layer){
     list<Thing*> *things = layer->getAllThings();
     list<Thing*>::iterator it;
     for(it=things->begin(); it!=things->end(); it++){
-        if((*it)->isDead()){
-            things->erase(it);
-            continue;
-        }
         if (isCollision(*it)) {
             (*it)->kill();
             kills++;

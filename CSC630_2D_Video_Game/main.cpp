@@ -2,9 +2,19 @@
 //  main.cpp
 //  CSC630_2D_Video_Game
 //  
-//  author@ xiangdong zhu
+// The goal of this game is to eliminate all the evil things and kill as few good things as you can.
+//So, drop a bomb on these moving things by clicking your left mouse button. 
+//Press middle mouse button to start/ resume and pause game. Right click to enter debug mode.
+//By killing one bad thing, you gain scores. Killing good things will make you lose scores. 
+//If you kill all the bad things, you win. If you kill so many good things that makes your score negative, you lose. 
+//Also, dropping bombs consumes score. If you drop many bombs but gain no score, you might lose since your score is negative.
+//Every 15 seconds, there will be more good things and bad things. So move fast before it's getting too crowded.
 //
-//  Copyright  All rights reserved.
+//  extra features:
+//  startup message
+//  fullscreen mode
+//  more things appear after a fixed time
+//  
 //
 
 #include "Thing.h"
@@ -14,8 +24,8 @@
 #include <string>
 #include <stdlib.h>			// standard definitions
 #include <stdio.h>			// C I/O (for sprintf) 
-#include <math.h>			// standard definitions
-#include <list.h>
+#include <math.h>
+#include <list>
 using namespace std;
 
 #ifdef _WIN32
@@ -261,7 +271,7 @@ void drawText(const char string[], int x, int y){
 
 void drawCenter(const char string[]){
     int len = strlen(string);
-    unsigned char ss[len];
+    unsigned char *ss=new unsigned char[len];
     for (int i=0; i<len; i++) {
         ss[i]=string[i];
     }

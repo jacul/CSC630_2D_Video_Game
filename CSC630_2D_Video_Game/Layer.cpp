@@ -1,9 +1,7 @@
 //
 //  Layer.cpp
 //  CSC630_2D_Video_Game
-//
-//  Created by zhu xiangdong on 11-10-21.
-//  Copyright 2011年 __MyCompanyName__. All rights reserved.
+// This class definites the level of this game. Level holds all the things. It perform things' movement and collisions.
 //
 
 #include <iostream>
@@ -34,8 +32,12 @@ void Layer::thingsMovement(){
     list<Thing*>::iterator it;
     for(it=thingsCollection.begin(); it!=thingsCollection.end(); it++){
         (*it)->move();
-        if((*it)->isDead())
-            thingsCollection.erase(it);
+        if((*it)->canRemove())
+        {
+            it=thingsCollection.erase(it);
+            it--;
+            continue;
+        }
     }
 }
 
