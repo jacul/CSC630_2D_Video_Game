@@ -19,11 +19,13 @@ Have fun!
 FEATURES THAT IMPLEMENTED:
 things movement, pause and single-step
 bomb movement and color
-correct scoring, display score, final result
+Destroying action, correct scoring, display score, final result
+Documentation
 
 FEATURES THAT NOT IMPLEMENTED:
 NONE
 
 EXTRA FEATURES:
+start up message.
 full screen mode;
 more things appear in a fixed time.

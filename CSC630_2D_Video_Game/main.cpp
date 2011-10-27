@@ -191,7 +191,7 @@ void keyboard(unsigned char c, int x, int y){
         case 13://enter key
 			if (FULLSCREEN) {//toggle between full screen and window mode
 				glutReshapeWindow(600, 600);
-				glutPositionWindow(400, 200);
+				glutPositionWindow(400, 100);
 				FULLSCREEN=false;
 			}else {
 				glutFullScreen();
@@ -267,7 +267,7 @@ void drawCenter(const char string[]){
     }
     int stringwidth=glutBitmapLength(font, ss);
     
-    int x=(600-stringwidth)/2;
+    int x=(width-stringwidth)*400/width/2;
     int y=200;
     drawText(string, x,y);
 }
@@ -334,7 +334,7 @@ int main (int argc, char * argv[])
 
     //*  Here to initial window
     glutInitWindowSize(width, height);
-    glutInitWindowPosition(400, 200);
+    glutInitWindowPosition(400, 100);
     glutCreateWindow("Bomb Game");
     
     //Set callbacks

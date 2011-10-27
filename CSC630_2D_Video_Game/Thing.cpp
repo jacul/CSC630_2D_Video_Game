@@ -36,7 +36,7 @@ void Thing::paint(){
         glVertex2i(x+HALFSIZE, y-HALFSIZE); // The bottom right corner  
         glEnd();
     }else{
-        glColor3f(0,1,0);
+        glColor3f(0,0,1);
         glBegin(GL_LINE_STRIP);
         glVertex2i(x-HALFSIZE, y-HALFSIZE); // The bottom left corner  
         glVertex2i(x-HALFSIZE, y+HALFSIZE); // The top left corner  
