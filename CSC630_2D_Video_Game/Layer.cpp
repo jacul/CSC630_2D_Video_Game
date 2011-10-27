@@ -15,16 +15,18 @@ void Layer::generateThings(int type){
 }
 
 void Layer::generateThings(int type, int num){
-    if(type==GOOD){
-        int x= rand()%398 +1;
-        int y= rand()%398 +1;
-        GoodThing *good = new GoodThing(x,y,z);
-        putThing(good);
-    }else if(type==BAD){
-        int x= rand()%398 +1;
-        int y= rand()%398 +1;
-        BadThing *bad = new BadThing(x,y,z);
-        putThing(bad);
+    for (int i=0; i<num; i++) {
+        if(type==GOOD){
+            int x= rand()%398 +1;
+            int y= rand()%398 +1;
+            GoodThing *good = new GoodThing(x,y,z);
+            putThing(good);
+        }else if(type==BAD){
+            int x= rand()%398 +1;
+            int y= rand()%398 +1;
+            BadThing *bad = new BadThing(x,y,z);
+            putThing(bad);
+        }
     }
 }
 

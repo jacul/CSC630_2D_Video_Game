@@ -11,10 +11,12 @@
 #include "Layer.h"
 #include "Bomb.h"
 
+#include <string>
 #include <stdlib.h>			// standard definitions
 #include <stdio.h>			// C I/O (for sprintf) 
 #include <math.h>			// standard definitions
 #include <list.h>
+using namespace std;
 
 #ifdef _WIN32
 #include <GL/glut.h>
@@ -29,8 +31,14 @@
 
 #define PAUSE 0
 #define RUN   1
+#define END   2
+#define WIN 3
+
 #define INTERVAL 100
 
+const char welcome[] = "Press MIDDLE button to start/resume!";
+const char over[] = "Game Over!";
+const char success[] = "You win!";
 int game_status;
 int width = 500;
 int height = 500;
@@ -42,10 +50,11 @@ list <Bomb*> bombs;
 int score;
 int counter;
 
+void *font = GLUT_BITMAP_9_BY_15;
 bool FULLSCREEN=false;
 
 //every fixed time, new things appear
-void thingSpawn();
+void thingSpawn(int number);
 //movement of the things
 void thingsMove();
 //check if the bomb hit the things
@@ -54,22 +63,25 @@ void quit();
 void debugOutput();
 //this function makes the game go one step further
 void oneMovement();
+void drawText(const char string[],int x,int y);
+void drawPauseScreen();
+void drawStatus();
+void changeScore(int change);
+void drawGameOver();
+void drawSuccess();
 
 void initGameObject(){
-    //every level we have four things, for simplicity we just spawn four times
-    thingSpawn();
-    thingSpawn();
-    thingSpawn();
-    thingSpawn();
+    //every level we have four things at the beginning
+    thingSpawn(4);
 }
 
 void customInit(){
     glClearColor(0, 0, 0, 1);
     glShadeModel(GL_SMOOTH);
     
-    game_status=RUN;
+    game_status=PAUSE;
     counter=0;
-    score=0;
+    score=500;//So you have 5 bombs at the beginning
     
     initGameObject();
 }
@@ -110,6 +122,14 @@ void display(){
     
     drawBombs();
     
+    if(game_status==PAUSE)
+        drawPauseScreen();
+    else if(game_status==END)
+        drawGameOver();
+    else if(game_status==WIN)
+        drawSuccess();
+    drawStatus();
+    
     glFlush();
     
     glutSwapBuffers();
@@ -117,6 +137,7 @@ void display(){
 
 //player drops a bomb on the current position
 void dropBomb(int x,int y){
+    changeScore(-100);//each bomb costs you 100, use them wisely!
     Bomb *b = new Bomb(x,y,0);
     bombs.push_back(b);
 }
@@ -131,16 +152,22 @@ void mouse(int button,int status,int x,int y){
     if(status==GLUT_UP){
         switch (button) {
             case GLUT_LEFT_BUTTON:
-                dropBomb(x*400/width, y*400/height);
+                if(game_status==RUN)
+                    dropBomb(x*400/width, y*400/height);
                 break;
             case GLUT_MIDDLE_BUTTON:
+                if(game_status==END||game_status==WIN){
+                    score=500;
+                }
                 pauseGame();
                 break;
             case GLUT_RIGHT_BUTTON:
                 if(game_status==RUN){//when it's running, pause it.
                     pauseGame();
+                }else
+                if(game_status==PAUSE){
+                    oneMovement();
                 }
-                oneMovement();
                 debugOutput();
                 break;
             default:
@@ -149,6 +176,7 @@ void mouse(int button,int status,int x,int y){
         glutPostRedisplay();
     }
 }
+
 //keyboard callback
 void keyboard(unsigned char c, int x, int y){
     switch (c) {
@@ -181,7 +209,7 @@ void oneMovement(){
     thingsMove();
     if(counter>=10000){//every 10 seconds, we have more new friends
         counter=0;
-        thingSpawn();
+        thingSpawn(1);
     }
     counter+=INTERVAL;
 }
@@ -191,7 +219,6 @@ void timerfunc(int status){
     if(status == RUN){
         oneMovement();
     }
-    //debugOutput();
     glutTimerFunc(INTERVAL, timerfunc, game_status);
     glutPostRedisplay();
 }
@@ -212,25 +239,74 @@ void thingsMove(){
     
 }
 
+void drawStatus(){
+    char score_str[]="\0\0\0\0\0\0\0\0\0\0\0\0";
+    sprintf(score_str, "score: %i",score);
+    drawText(score_str, 10, 10);
+}
+
+//draw text at the provided position.
+void drawText(const char string[], int x, int y){
+    glPushMatrix();
+    
+    int len = (int) strlen(string);
+    
+    glColor3f(1,1,1);
+    glRasterPos2f(x, y);
+    for (int i = 0; i < len; i++) {
+        glutBitmapCharacter(font, string[i]);
+    }
+    glPopMatrix();
+}
+
+void drawCenter(const char string[]){
+    int len = (int) strlen(string);
+    int stringwidth=glutBitmapWidth(font, '.');
+    int x=(width-stringwidth*len)/2;
+    int y=height/2;
+    drawText(string, x,y);
+}
+
+void drawGameOver(){
+    drawCenter(over);
+}
+
+void drawSuccess(){
+    drawCenter(success);
+}
+
+void drawPauseScreen(){
+    drawCenter(welcome);
+}
+
+void changeScore(int change){
+    score+=change;
+    if (score<0) {
+        game_status=END;
+    }
+}
+
 void detectCollision(){
     list<Bomb*>::iterator it;
     for(it=bombs.begin(); it!=bombs.end(); it++){
         int kills = (*it)->hitLevel(&layer[(*it)->getLevel()]);
-        if(kills > 0){
-            
-        }
+        changeScore(kills);
+    }
+    if(layer[3].getThingsNum()==0&&layer[4].getThingsNum()==0){
+        //no more bad guys! you win!
+        game_status=WIN;
     }
 }
-
-void thingSpawn(){
+//parameters: numbers means how many things each level will have.
+void thingSpawn(int number){
     //Engaging more bad things. Try to eliminate them all!
-    layer[3].generateThings(BAD);
-    layer[4].generateThings(BAD);
+    layer[3].generateThings(BAD, number);
+    layer[4].generateThings(BAD, number);
     
     //we have more good things. Thus making the game harder.
-    layer[0].generateThings(GOOD);
-    layer[1].generateThings(GOOD);
-    layer[2].generateThings(GOOD);
+    layer[0].generateThings(GOOD, number);
+    layer[1].generateThings(GOOD, number);
+    layer[2].generateThings(GOOD, number);
 }
 
 void debugOutput(){

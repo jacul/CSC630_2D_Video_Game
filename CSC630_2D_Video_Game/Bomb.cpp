@@ -25,8 +25,9 @@ bool Bomb::isCollision(Thing *thing){
     return tx>=x-HALFSIZE && tx<=x+HALFSIZE && ty>=y-HALFSIZE && ty<=y+HALFSIZE;
 }
 
+//bomb is a triangle
 void Bomb::paint(){
-    glColor3f(0, 1, 0);
+    glColor3fv(BOMBCOLORS[z]);
     glBegin(GL_POLYGON);
     glVertex2d(x, y-4);
     glVertex2d(x+4, y+4);
@@ -38,6 +39,7 @@ void Bomb::printInfo(){
     cout<<"Bomb at: "<<x<<" "<<y<<" "<<z<<endl;
 }
 
+//the bomb moves all the way to bottom. If it reached the bottom, the return value will be true; otherwise false.
 bool Bomb::forwardToBottom(){
     z++;
     return z>=LAYERNUM;
@@ -47,6 +49,7 @@ int Bomb::getLevel(){
     return z;
 }
 
+//the bomb hits this level. It may kill something. Can be good or bad. Can gain score or lose score.
 int Bomb::hitLevel(Layer *layer){
     int kills = 0;
     list<Thing*> *things = layer->getAllThings();
@@ -57,5 +60,5 @@ int Bomb::hitLevel(Layer *layer){
             kills++;
         }
     }
-    return kills;
+    return kills*layer->getLevelScore();
 }

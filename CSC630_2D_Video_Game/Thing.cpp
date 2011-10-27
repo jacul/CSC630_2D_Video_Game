@@ -21,11 +21,11 @@
 Thing::Thing(int x, int y, int z){
     this->x=x;this->y=y;this->z=z;
     r = rand()%361;//0~360
-    spd=rand()%9+2;//2~10
+    spd=rand()%6+3;//3~8
 }
 
 void Thing::paint(){
-    glColor3fv(COLORS[z]);
+    glColor3fv(THINGCOLORS[z]);
     glBegin(GL_POLYGON);
     glVertex2i(x-HALFSIZE, y-HALFSIZE); // The bottom left corner  
     glVertex2i(x-HALFSIZE, y+HALFSIZE); // The top left corner  
@@ -38,10 +38,18 @@ void Thing::move(){
     float dg=r*DR;
     x+= cos(dg)*spd;
     y-= sin(dg)*spd;
-    if(x<0||x>399){
+    if(x<HALFSIZE){
+        x=HALFSIZE;
+        r=180-r;
+    }else if(x>399-HALFSIZE){
+        x=399-HALFSIZE;
         r=180-r;
     }
-    if(y<0||y>399){
+    if(y<HALFSIZE){
+        y=HALFSIZE;
+        r=360-r;
+    }else if(y>399-HALFSIZE){
+        y=399-HALFSIZE;
         r=360-r;
     }
     r%=361;

@@ -16,12 +16,13 @@ using namespace std;
 #define GOOD 0
 #define BAD 1
 
-const float COLORS[5][3] = {{1,1,0},//yellow
+const float THINGCOLORS[5][3] = {{1,1,0},//yellow
     {1,0.8431,0},//gold
     {1,0.27,0},//orange red
     {0.54,0.1686,0.886},//blue violet
     {0.5647,0,0.82745}};//dark violet
-const int HALFSIZE = 5;
+
+const int HALFSIZE = 5;//so the whole size is 10.
 const float DR = 3.14159/180;
 
 class Thing{

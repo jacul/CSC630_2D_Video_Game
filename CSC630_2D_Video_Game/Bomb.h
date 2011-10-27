@@ -12,6 +12,13 @@
 #include "Thing.h"
 #include "Layer.h"
 
+const float BOMBCOLORS[5][3] = {
+    0, 1,   0,
+    0, 0.8,0,
+    0, 0.6  ,0,
+    0, 0.4,0,
+    0,0.3,0
+};
 class Bomb{
 
 private:
