@@ -34,6 +34,8 @@ void Layer::thingsMovement(){
     list<Thing*>::iterator it;
     for(it=thingsCollection.begin(); it!=thingsCollection.end(); it++){
         (*it)->move();
+        if((*it)->isDead())
+            thingsCollection.erase(it);
     }
 }
 

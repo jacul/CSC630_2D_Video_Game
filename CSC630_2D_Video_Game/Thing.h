@@ -30,6 +30,8 @@ class Thing{
 protected:
     int x, y, z;
     int r,spd;
+    bool dead;
+    int deadcounter;
     
 public:
     Thing(int x, int y, int z);
@@ -41,6 +43,8 @@ public:
     int getX(){return x;};
     int getY(){return y;};
     void printInfo();
+    void kill(){dead=true;};
+    bool isDead(){if(dead)deadcounter++;return dead &&deadcounter>=2;};
 };
 
 class BadThing:virtual public Thing{

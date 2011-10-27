@@ -55,8 +55,12 @@ int Bomb::hitLevel(Layer *layer){
     list<Thing*> *things = layer->getAllThings();
     list<Thing*>::iterator it;
     for(it=things->begin(); it!=things->end(); it++){
-        if (isCollision(*it)) {
+        if((*it)->isDead()){
             things->erase(it);
+            continue;
+        }
+        if (isCollision(*it)) {
+            (*it)->kill();
             kills++;
         }
     }

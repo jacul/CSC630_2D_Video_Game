@@ -207,7 +207,7 @@ void keyboard(unsigned char c, int x, int y){
 void oneMovement(){
     detectCollision();
     thingsMove();
-    if(counter>=10000){//every 10 seconds, we have more new friends
+    if(counter>=10000){//every 15 seconds, we have more new friends
         counter=0;
         thingSpawn(1);
     }

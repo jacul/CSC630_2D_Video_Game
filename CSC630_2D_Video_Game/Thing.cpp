@@ -22,16 +22,29 @@ Thing::Thing(int x, int y, int z){
     this->x=x;this->y=y;this->z=z;
     r = rand()%361;//0~360
     spd=rand()%6+3;//3~8
+    dead = false;
+    deadcounter=0;
 }
 
 void Thing::paint(){
-    glColor3fv(THINGCOLORS[z]);
-    glBegin(GL_POLYGON);
-    glVertex2i(x-HALFSIZE, y-HALFSIZE); // The bottom left corner  
-    glVertex2i(x-HALFSIZE, y+HALFSIZE); // The top left corner  
-    glVertex2i(x+HALFSIZE, y+HALFSIZE); // The top right corner  
-    glVertex2i(x+HALFSIZE, y-HALFSIZE); // The bottom right corner  
-    glEnd();
+    if(!dead){
+        glColor3fv(THINGCOLORS[z]);
+        glBegin(GL_POLYGON);
+        glVertex2i(x-HALFSIZE, y-HALFSIZE); // The bottom left corner  
+        glVertex2i(x-HALFSIZE, y+HALFSIZE); // The top left corner  
+        glVertex2i(x+HALFSIZE, y+HALFSIZE); // The top right corner  
+        glVertex2i(x+HALFSIZE, y-HALFSIZE); // The bottom right corner  
+        glEnd();
+    }else{
+        glColor3f(0,1,0);
+        glBegin(GL_LINE_STRIP);
+        glVertex2i(x-HALFSIZE, y-HALFSIZE); // The bottom left corner  
+        glVertex2i(x-HALFSIZE, y+HALFSIZE); // The top left corner  
+        glVertex2i(x+HALFSIZE, y+HALFSIZE); // The top right corner  
+        glVertex2i(x+HALFSIZE, y-HALFSIZE); // The bottom right corner
+        glVertex2i(x-HALFSIZE, y-HALFSIZE);
+        glEnd();
+    }
 }
 
 void Thing::move(){
