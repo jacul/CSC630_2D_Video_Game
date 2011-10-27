@@ -29,12 +29,13 @@
 
 #define PAUSE 0
 #define RUN   1
-#define INTERVAL 1000
+#define INTERVAL 100
 
 int game_status;
 int width = 500;
 int height = 500;
 
+//five layers
 Layer layer[LAYERNUM]={Layer(0),Layer(1),Layer(2),Layer(3),Layer(4)};
 list <Bomb*> bombs;
 
@@ -43,14 +44,19 @@ int counter;
 
 bool FULLSCREEN=false;
 
+//every fixed time, new things appear
 void thingSpawn();
+//movement of the things
 void thingsMove();
+//check if the bomb hit the things
 void detectCollision();
 void quit();
 void debugOutput();
+//this function makes the game go one step further
+void oneMovement();
 
 void initGameObject(){
-    //every level we have four things.
+    //every level we have four things, for simplicity we just spawn four times
     thingSpawn();
     thingSpawn();
     thingSpawn();
@@ -68,6 +74,7 @@ void customInit(){
     initGameObject();
 }
 
+//invoked when the window is resized
 void reshape(int newWidth, int newHeight){
     width = newWidth;
     height = newHeight;
@@ -81,6 +88,7 @@ void reshape(int newWidth, int newHeight){
     glutPostRedisplay();
 }
 
+//draw all bombs
 void drawBombs(){
     list<Bomb*>::iterator bombit;
     for(bombit=bombs.begin();bombit!=bombs.end();bombit++){
@@ -88,10 +96,12 @@ void drawBombs(){
     }
 }
 
+//display callback
 void display(){
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
     
+    //draw all layers here, and the things are drawn by these layers
     layer[4].drawThings();
     layer[3].drawThings();
     layer[2].drawThings();
@@ -105,15 +115,18 @@ void display(){
     glutSwapBuffers();
 }
 
+//player drops a bomb on the current position
 void dropBomb(int x,int y){
     Bomb *b = new Bomb(x,y,0);
     bombs.push_back(b);
 }
 
+//the game is paused
 void pauseGame(){
     game_status= game_status==RUN ? PAUSE : RUN;
 }
 
+//mouse callback
 void mouse(int button,int status,int x,int y){
     if(status==GLUT_UP){
         switch (button) {
@@ -124,6 +137,10 @@ void mouse(int button,int status,int x,int y){
                 pauseGame();
                 break;
             case GLUT_RIGHT_BUTTON:
+                if(game_status==RUN){//when it's running, pause it.
+                    pauseGame();
+                }
+                oneMovement();
                 debugOutput();
                 break;
             default:
@@ -132,7 +149,7 @@ void mouse(int button,int status,int x,int y){
         glutPostRedisplay();
     }
 }
-
+//keyboard callback
 void keyboard(unsigned char c, int x, int y){
     switch (c) {
         case 'q':
@@ -143,8 +160,8 @@ void keyboard(unsigned char c, int x, int y){
         case 'P':
             pauseGame();
             break;
-        case 13:
-			if (FULLSCREEN) {
+        case 13://enter key
+			if (FULLSCREEN) {//toggle between full screen and window mode
 				glutReshapeWindow(400, 400);
 				glutPositionWindow(400, 200);
 				FULLSCREEN=false;
@@ -159,15 +176,20 @@ void keyboard(unsigned char c, int x, int y){
     glutPostRedisplay();
 }
 
+void oneMovement(){
+    detectCollision();
+    thingsMove();
+    if(counter>=10000){//every 10 seconds, we have more new friends
+        counter=0;
+        thingSpawn();
+    }
+    counter+=INTERVAL;
+}
+
+//timer callback
 void timerfunc(int status){
     if(status == RUN){
-        detectCollision();
-        thingsMove();
-        if(counter==20){//every 20 seconds, we have more new friends
-            counter=0;
-            thingSpawn();
-        }
-        counter++;
+        oneMovement();
     }
     //debugOutput();
     glutTimerFunc(INTERVAL, timerfunc, game_status);
@@ -176,6 +198,7 @@ void timerfunc(int status){
 
 void thingsMove(){
     for (int i=0; i<LAYERNUM; i++) {
+        //things move at every layer
         layer[i].thingsMovement();
     }
 

@@ -21,7 +21,7 @@
 Thing::Thing(int x, int y, int z){
     this->x=x;this->y=y;this->z=z;
     r = rand()%361;//0~360
-    spd=4;
+    spd=rand()%9+2;//2~10
 }
 
 void Thing::paint(){
