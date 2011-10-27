@@ -40,8 +40,8 @@ const char welcome[] = "Press MIDDLE button to start/resume!";
 const char over[] = "Game Over!";
 const char success[] = "You win!";
 int game_status;
-int width = 500;
-int height = 500;
+int width = 600;
+int height = 600;
 
 //five layers
 Layer layer[LAYERNUM]={Layer(0),Layer(1),Layer(2),Layer(3),Layer(4)};
@@ -90,7 +90,7 @@ void customInit(){
 void reshape(int newWidth, int newHeight){
     width = newWidth;
     height = newHeight;
-    
+
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -190,7 +190,7 @@ void keyboard(unsigned char c, int x, int y){
             break;
         case 13://enter key
 			if (FULLSCREEN) {//toggle between full screen and window mode
-				glutReshapeWindow(400, 400);
+				glutReshapeWindow(600, 600);
 				glutPositionWindow(400, 200);
 				FULLSCREEN=false;
 			}else {
@@ -240,7 +240,7 @@ void thingsMove(){
 }
 
 void drawStatus(){
-    char score_str[]="\0\0\0\0\0\0\0\0\0\0\0\0";
+    char score_str[20];
     sprintf(score_str, "score: %i",score);
     drawText(score_str, 10, 10);
 }
@@ -260,10 +260,15 @@ void drawText(const char string[], int x, int y){
 }
 
 void drawCenter(const char string[]){
-    int len = (int) strlen(string);
-    int stringwidth=glutBitmapWidth(font, '.');
-    int x=(width-stringwidth*len)/2;
-    int y=height/2;
+    int len = strlen(string);
+    unsigned char ss[len];
+    for (int i=0; i<len; i++) {
+        ss[i]=string[i];
+    }
+    int stringwidth=glutBitmapLength(font, ss);
+    
+    int x=(600-stringwidth)/2;
+    int y=200;
     drawText(string, x,y);
 }
 
