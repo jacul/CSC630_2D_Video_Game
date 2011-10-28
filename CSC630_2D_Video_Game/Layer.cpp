@@ -1,7 +1,7 @@
 //
 //  Layer.cpp
 //  CSC630_2D_Video_Game
-// This class definites the level of this game. Level holds all the things. It perform things' movement and collisions.
+// This class defines the level of this game. Level holds all the things. It perform things' movement and collisions.
 //
 
 #include <iostream>
